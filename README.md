@@ -1,0 +1,1 @@
+Este script es un ejercicio que simula el funcionamiento de un banco por linea de comando.
