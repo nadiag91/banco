@@ -1,16 +1,30 @@
 from cuentabancaria import CuentaBancaria
+from clasePersona import Persona
 
 
-def buscar_cuenta(apellido):
+
+def buscar_cuenta(nro_cuenta):
   posicion = -1 
   encontrado = False
   for cuenta in lista_cuentas_bancarias:
-    if(apellido == cuenta.ver_apellido()):
+    if(nro_cuenta == cuenta.vercuenta()):
       posicion = lista_cuentas_bancarias.index(cuenta)
       encontrado = True
   
   return posicion,encontrado
-    
+
+
+def buscar_cliente(apellido):
+  posicion = -1 
+  encontrado = False
+  for cliente in lista_clientes:
+    if(apellido == cliente.ver_apellido()):
+      posicion = lista_clientes.index(cliente)
+      encontrado = True
+
+  return posicion,encontrado
+
+
 
 def validar_saldo(monto, posicion):
   saldo_mayor_a_monto = False
@@ -31,23 +45,30 @@ def transferencia(posicionA,posicionB,monto):
   
       
 lista_cuentas_bancarias = []
-c1 = CuentaBancaria(1234,"asd","12312",100)
-c2 = CuentaBancaria(1233,"qwe","12123",200)
-c3 = CuentaBancaria(1235,"zxc","12123",300)
-c4 = CuentaBancaria(1235,"fgh","12123",400)
+c1 = CuentaBancaria(1234,100)
+c2 = CuentaBancaria(1233,200)
 lista_cuentas_bancarias.append(c1)
 lista_cuentas_bancarias.append(c2)
-lista_cuentas_bancarias.append(c3)
-lista_cuentas_bancarias.append(c4)
 
 
-Apellido = input('Ingrese apellido de la cuenta a extraer: ')
+lista_clientes = []
+p1 = Persona("hugo", "asd", "123456")
+p2 = Persona("dario", "qwe", "321654")
+lista_clientes.append(p1)
+lista_clientes.append(p2)
 
-posicionA, existenciaA = buscar_cuenta(Apellido)
-print(posicionA,existenciaA)
+opciones = int(input("Ingrese 1 para buscar una cuenta por su número o ingrese 2 para buscar cuenta por apellido "))
+
+if opciones == 1: 
+  cuenta_cliente = int(input('Ingrese el número de la cuenta a extraer el dinero: '))
+  posicionA,existenciaA = buscar_cuenta(cuenta_cliente)
+
+if opciones == 2:
+  Apellido = input('Ingrese apellido de la cuenta a extraer el dinero: ')
+  posicionA, existenciaA = buscar_cliente(Apellido)
+
 
 cuenta_origen = posicionA
-
 
 if posicionA != -1:
   print("la encontré")
@@ -63,10 +84,18 @@ else:
 
   print("El saldo de la cuenta encontrada es: {}".format(lista_cuentas_bancarias[cuenta_origen].ver_saldo()))
   
-  
-  Apellido2 = input('Ingrese apellido de la cuenta a depositar: ')
-  
-  posicionB,existenciaB = buscar_cuenta(Apellido2)
+
+
+  opciones2 = int(input("Ingrese 1 para buscar cuenta por número de cuenta, ingrese 2 para buscar cuenta por apellido "))
+
+  if opciones2 == 1: 
+    cuenta_cliente2 = int(input('Ingrese el número de la cuenta a depositar el dinero: '))
+    posicionB,existenciaB = buscar_cuenta(cuenta_cliente2)
+
+  if opciones2 == 2:
+    Apellido2 = input('Ingrese apellido de la cuenta a depositar: ')
+    posicionB,existenciaB = buscar_cliente(Apellido2)
+
   cuenta_destino = posicionB
 
   if (existenciaB == False):
